@@ -1,0 +1,324 @@
+-- phpMyAdmin SQL Dump
+-- version 4.4.15.7
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Sep 30, 2017 at 03:02 PM
+-- Server version: 5.6.36
+-- PHP Version: 7.0.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `Groceries`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Category`
+--
+
+CREATE TABLE IF NOT EXISTS `Category` (
+  `category_id` int(11) NOT NULL,
+  `Type` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Category`
+--
+
+INSERT INTO `Category` (`category_id`, `Type`) VALUES
+(1, 'Dry Groceries'),
+(2, 'Beverages'),
+(3, 'Snacks'),
+(4, 'Butchery');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE IF NOT EXISTS `customer` (
+  `customer_id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `surname` varchar(20) NOT NULL,
+  `email` varchar(70) NOT NULL,
+  `contact` varchar(10) NOT NULL,
+  `unitno` varchar(5) NOT NULL,
+  `street` varchar(70) NOT NULL,
+  `city` varchar(70) NOT NULL,
+  `province` varchar(70) NOT NULL,
+  `postalcode` varchar(6) NOT NULL,
+  `password` varchar(70) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`customer_id`, `name`, `surname`, `email`, `contact`, `unitno`, `street`, `city`, `province`, `postalcode`, `password`) VALUES
+(10, 'Thabo', 'Moopa', 'JohnJohn1@gmail.com', '0987654321', '09', 'Cape', 'Cape Town', 'Western Cape', '0981', '351c023bf9158d7e23464ed18115bf0a'),
+(11, 'Ntsako', 'Mboweni', 'mboweni@gmail.com', '0987654321', '87', 'Cape', 'Cape town', 'Western Cape', '0125', '351c023bf9158d7e23464ed18115bf0a'),
+(12, 'Thabo', 'John', 'thabo.moopa@gmail.com', '0849262255', '25', 'Kaapzihct', 'Cape Town', 'Western Cape', '0152', '351c023bf9158d7e23464ed18115bf0a'),
+(13, 'Thabo', 'Moopa', 'JohnJohn2@gmail.com', '0849262255', '87', 'Kaapzihct', 'Cape town', 'Western Cape', '0987', '351c023bf9158d7e23464ed18115bf0a'),
+(15, 'ntsako', 'Mboweni', 'admin@ntsakomboweni.co.za', '0780383894', '123', 'barrack', 'Cape town', 'Western Cape', '8000', '77388bbda37ab3d5b23abc55b0fdf9c2'),
+(16, 'Thabo', 'Moopa', 'thabothabo23@gmail.com', '0849262255', '65', 'Kaapzihct', 'Cape town', 'Western Cape', '0987', '351c023bf9158d7e23464ed18115bf0a');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices` (
+  `customer_id` int(11) NOT NULL,
+  `invoice_id` int(70) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoices`
+--
+
+INSERT INTO `invoices` (`customer_id`, `invoice_id`) VALUES
+(12, 349244801),
+(12, 1051121770);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ItemsPurchased`
+--
+
+CREATE TABLE IF NOT EXISTS `ItemsPurchased` (
+  `items_id` int(11) NOT NULL,
+  `product_name` varchar(40) NOT NULL,
+  `price` float NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `subtotal` float NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `purchase_date` date NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ItemsPurchased`
+--
+
+INSERT INTO `ItemsPurchased` (`items_id`, `product_name`, `price`, `quantity`, `subtotal`, `invoice_id`, `purchase_date`) VALUES
+(57, 'Doritos', 22.49, 4, 89.96, 1051121770, '2017-09-27'),
+(58, 'Knorr Brown Onion Soup', 4.99, 6, 29.94, 349244801, '2017-09-27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderLine`
+--
+
+CREATE TABLE IF NOT EXISTS `orderLine` (
+  `line_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `total` float NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `order_id` varchar(40) NOT NULL,
+  `invoice_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5829 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orderLine`
+--
+
+INSERT INTO `orderLine` (`line_id`, `quantity`, `total`, `product_id`, `order_id`, `invoice_id`) VALUES
+(5799, 4, 259.96, 1, 'r67ttbr4ns5pf6khu7rnm5e9l3', 753136713);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE IF NOT EXISTS `orders` (
+  `order_id` varchar(40) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `order_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`) VALUES
+('2mgs56gpfqlb5dudcgts336dd2', 11, '2017-09-09'),
+('2o5ai12m3riqsgco99q425iji5', 10, '2017-09-10'),
+('7hboff1l1cag4o0d9pcl85jbu5', 12, '2017-09-27'),
+('cl9p6rltt1lih5t2d84s096kc7', 10, '2017-09-13'),
+('fcv266md4a2vgjhm9lfovls9h6', 12, '2017-09-21'),
+('jo1enpg30a8h0ajgjcrmk60q87', 12, '2017-09-19'),
+('r51uq91cljvoim92383f4etie3', 12, '2017-09-27'),
+('r67ttbr4ns5pf6khu7rnm5e9l3', 10, '2017-09-09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE IF NOT EXISTS `product` (
+  `product_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `product_name` varchar(70) NOT NULL,
+  `description` text NOT NULL,
+  `price` float NOT NULL,
+  `quantity` int(50) NOT NULL,
+  `image` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `category_id`, `product_name`, `description`, `price`, `quantity`, `image`) VALUES
+(1, 1, 'Ouma Buttermilk Rusks', 'Ouma Bun Rusk Buttermilk 1KG', 64.99, 0, 'images/oumarusks.jpg'),
+(2, 2, 'Mo''Faya Energy Drink', 'Mo''Faya Energy Drink 500ml', 15.99, 2, 'images/mofaya.jpg'),
+(3, 3, 'Doritos', 'Doritos Supreme Cheese 250g ', 22.49, 19, 'images/doritos.jpg'),
+(5, 1, 'Knorr Brown Onion Soup', 'Knorr Brown Onion Soup 45g', 4.99, 31, 'images/knorr.jpg'),
+(6, 1, 'Alpen Nutrific', 'Alpen Nutrific Muesli  1350g ', 67.99, 40, 'images/nutrific.jpg'),
+(7, 1, 'Ace Instant Porridge', 'Ace Instant Original Porridge 1kg', 18.99, 35, 'images/ace.jpg'),
+(8, 2, 'Krush Peach And Mango', 'Krush Peach And Mango Krush 500 ML ', 13.89, 30, 'images/krush.jpg'),
+(9, 2, 'Sir Juice Fruit ', 'Sir Juice Fruit Cocktail 1.5 Litre', 29.99, 46, 'images/sir.jpg'),
+(10, 2, 'Take 5 Juice', 'Take 5 Mango juice 500ml', 13.69, 46, 'images/take.jpg'),
+(11, 3, 'Bakers Bicuits', 'Bakers Bicuits Tennis Caramel 200g', 14.99, 50, 'images/bakers.jpg'),
+(12, 3, 'Bakers Choice Assorted', 'Bakers Choice Assorted Biscuits 1kg', 114.99, 50, 'images/choice.jpg'),
+(13, 3, 'Ferrero Rocher', 'Ferrero Rocher Chocolate Box 200g', 89.99, 46, 'images/choc.jpg'),
+(14, 4, 'Koo Choice Grade', 'Koo Choice Grade Guava Halves 410 GR', 19.99, 50, 'images/koo.jpg'),
+(15, 4, 'Koo Choice Grade Peach ', 'Koo Choice Grade Peach Halves 825g', 28.99, 46, 'images/koo1.jpg'),
+(16, 4, 'Koo Choice Grade Sliced', 'Koo Choice Grade Sliced PieApples 385g ', 21.99, 50, 'images/koo2.jpg'),
+(17, 4, 'Weigh-less Fruit', 'Weigh-less Fruit Salad 400g ', 22.99, 46, 'images/koo4.jpg');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `Category`
+--
+ALTER TABLE `Category`
+  ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`invoice_id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `ItemsPurchased`
+--
+ALTER TABLE `ItemsPurchased`
+  ADD PRIMARY KEY (`items_id`),
+  ADD KEY `invoice_id` (`invoice_id`);
+
+--
+-- Indexes for table `orderLine`
+--
+ALTER TABLE `orderLine`
+  ADD PRIMARY KEY (`line_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`product_id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `category_id_2` (`category_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Category`
+--
+ALTER TABLE `Category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `ItemsPurchased`
+--
+ALTER TABLE `ItemsPurchased`
+  MODIFY `items_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+--
+-- AUTO_INCREMENT for table `orderLine`
+--
+ALTER TABLE `orderLine`
+  MODIFY `line_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5829;
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
+
+--
+-- Constraints for table `ItemsPurchased`
+--
+ALTER TABLE `ItemsPurchased`
+  ADD CONSTRAINT `itemspurchased_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`invoice_id`);
+
+--
+-- Constraints for table `orderLine`
+--
+ALTER TABLE `orderLine`
+  ADD CONSTRAINT `orderline_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `orderline_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `Category` (`category_id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
